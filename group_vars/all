@@ -1,0 +1,22 @@
+---
+unix_user: vagrant
+frontEndHostname: trans.local
+apiHostname: api.trans.local
+
+default_protocol: http
+mysql_root_pass: nothingtoseehere
+
+dbname: transdb
+dbuser: transdb
+dbpassword: YVHohj9Ngzamo3MUZnDyyq3GpZHEGMJPRmQQ76V
+
+webRoot: /var/www
+
+#install paths relative to webRoot
+transLocalPath: /trans-frontend-source
+apiLocalPath: /api
+
+frontEndGruntServe: false
+frontEndBranch: canada
+frontEndJurisdiction: 18
+frontEndLang: en

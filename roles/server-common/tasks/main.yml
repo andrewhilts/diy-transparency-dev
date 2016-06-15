@@ -1,0 +1,25 @@
+---
+  - name: install nginx and curl
+    apt: name={{item}} state=installed
+    with_items:
+      - nginx
+      - nginx-extras
+      - curl
+    register: nginxinstalled
+
+# ###
+# ### NGINX CONFIG STUFF
+# ###
+
+  - name: Disable default site
+    when: nginxinstalled|success
+    register: defaultsitedisabled
+    file: dest=/etc/nginx/sites-enabled/default state=absent
+
+  - name: Copy over nginx includes
+    when: nginxinstalled|success
+    copy: src=includes dest=/etc/nginx/
+
+  - name: Copy nginx config
+    when: nginxinstalled|success
+    copy: src=nginx/nginx.conf dest=/etc/nginx/nginx.conf owner=root group=root

@@ -1,0 +1,16 @@
+- name: Add live site Config
+  template: src=live-site.conf.j2 dest=/etc/nginx/sites-available/{{ frontEndHostname }}.conf owner=root group=root
+  notify: restart nginx
+  sudo: yes
+  when: frontEndGruntServe
+
+- name: Add built site Config
+  template: src=site.conf.j2 dest=/etc/nginx/sites-available/{{ frontEndHostname }}.conf owner=root group=root
+  notify: restart nginx
+  sudo: yes
+  when: not frontEndGruntServe
+
+- name: Enable Site
+  file: src=/etc/nginx/sites-available/{{ frontEndHostname }}.conf dest=/etc/nginx/sites-enabled/{{ frontEndHostname }}.conf state=link force=yes
+  notify: restart nginx
+  sudo: yes

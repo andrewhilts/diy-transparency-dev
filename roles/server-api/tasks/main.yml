@@ -1,0 +1,42 @@
+###
+### Site Directory
+###
+
+  - name: Add site Config
+    register: siteconfig
+    template: src=site.conf.j2 dest=/etc/nginx/sites-available/{{ domain }}.conf owner=root group=root
+
+  - name: Create web root
+    file: path=/var/www/{{ apiLocalPath }} mode=775 owner={{ unix_user }} group=www-data state=directory
+
+###
+### SSL
+###
+
+  - name: Copying SSL cert
+    copy: src=cert/site.crt dest=/etc/ssl/certs/{{ domain }}.crt mode=0777 owner=root
+
+  - name: Copying SSL key
+    copy: src=cert/site.key dest=/etc/ssl/private/{{ domain }}.key mode=0600 owner=root group=root
+
+  - name: Copying dhparam.pem for PFS
+    copy: src=cert/dhparam.pem dest=/etc/ssl/certs/dhparam.pem mode=0777 owner=root
+
+###
+### REST
+###
+
+  - name: Enable site
+    when: siteconfig|success
+    register: siteenabled
+    file: src=/etc/nginx/sites-available/{{ domain }}.conf dest=/etc/nginx/sites-enabled/{{ domain }}.conf state=link force=yes
+
+  - name: uninstall apache (if installed)
+    when: siteenabled|success
+    apt: name=apache2 state=absent
+    register: apacheuninstalled
+    notify: 
+    - restart nginx
+
+  - name: Restart nginx
+    service: name=nginx state=restarted

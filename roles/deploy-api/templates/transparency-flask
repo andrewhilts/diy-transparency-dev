@@ -1,0 +1,7 @@
+check host {{apiHostname}} with address {{apiHostname}}
+    start program = "/sbin/start transparency-flask"
+    stop program  = "/sbin/stop transparency-flask"
+    if failed
+        port 443 protocol HTTPS
+        request "/"
+    then start

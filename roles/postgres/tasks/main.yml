@@ -1,0 +1,9 @@
+- name: install basic packages
+  apt: name={{item}} state=installed update_cache=yes
+  with_items:
+    - postgresql
+    - postgresql-contrib
+    - python-psycopg2
+    - python-dev
+    - libpq-dev
+  register: postgresqlinstalled

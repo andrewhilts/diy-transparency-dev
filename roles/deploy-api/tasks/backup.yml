@@ -1,0 +1,7 @@
+- name: backup database
+  shell: pg_dump -c {{dbname}} | gzip > /tmp/{{dbname}}-backup.sql.gz
+  args:
+    executable: /bin/bash
+  become: true
+  become_user: postgres
+- fetch: src=/tmp/{{dbname}}-backup.sql.gz dest=roles/deploy-api/files/{{dbname}}-backup.sql.gz flat=yes

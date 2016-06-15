@@ -1,0 +1,29 @@
+---
+- name: update server cache 
+  apt: update_cache=yes
+
+- name: upgrade all initial server packages
+  apt: upgrade=full
+  register: uptodate
+
+- name: install basic packages
+  when: uptodate|success
+  apt: name={{item}} state=installed
+  with_items:
+    - screen
+    - lynx
+    - fail2ban
+    - tree
+    - ack-grep
+    - monit
+  register: basicsinstalled
+
+# firewall stuff here
+#
+
+- name: Copy over iptables configuration
+  copy: src=iptables.sh dest=/usr/local/bin/iptables.sh mode=0744
+
+- name: Copy over firewall init.d configuration
+  copy: src=firewall dest=/etc/init.d/firewall mode=0755
+  notify: restart firewall

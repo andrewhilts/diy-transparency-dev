@@ -1,0 +1,14 @@
+---
+- name: install virtualenv
+  apt: name=python-virtualenv state=installed
+  sudo: yes
+
+## Check out Git code
+- name: check out API code
+  git: 
+    repo=https://github.com/andrewhilts/transparency-api.git
+    version=master
+    dest={{webRoot}}{{apiLocalPath}}
+
+- name: install flask
+  pip: name=flask virtualenv={{webRoot}}{{apiLocalPath}}/venv

@@ -1,0 +1,8 @@
+---
+- name: Transparency restore
+  hosts: all
+  sudo: yes
+
+  roles:
+    - role: deploy-api
+      mode: backup

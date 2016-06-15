@@ -1,0 +1,39 @@
+---
+- name: install dependencies
+  pip: requirements=requirements.txt virtualenv={{webRoot}}{{apiLocalPath}}/venv chdir={{webRoot}}{{apiLocalPath}}
+
+## Database setup
+- name: ensure database is created
+  postgresql_db: name={{dbname}} state=present login_user=postgres
+  sudo: yes
+  sudo_user: postgres
+
+- name: ensure user has access to database
+  postgresql_user: db={{dbname}} name={{dbuser}} password={{dbpassword}} priv=ALL
+  sudo: yes
+  sudo_user: postgres
+
+- name: ensure user does not have unnecessary privilege
+  postgresql_user: name={{dbuser}} role_attr_flags=NOSUPERUSER,NOCREATEDB
+  sudo: yes
+  sudo_user: postgres
+
+## Service to start and stop app and monitor its uptime
+- name: Copying transparency launch script
+  copy: src=transparency-flask.sh dest=/home/{{ unix_user }}/transparency-flask.sh mode=0777 owner={{unix_user}}
+
+- name: set up transparency-flask node service
+  template: src=transparency-flask.conf dest=/etc/init/transparency-flask.conf
+  sudo: yes
+
+- name: set up transparency-flask monit script
+  template: src=transparency-flask dest=/etc/monit/conf.d/transparency-flask mode=0700
+  sudo: yes
+
+- name: start transparency-flask service
+  service: name=transparency-flask state=started enabled=yes
+  sudo: yes
+
+- name: restart transparency-flask service
+  service: name=transparency-flask state=restarted enabled=yes
+  sudo: yes

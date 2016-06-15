@@ -1,0 +1,12 @@
+- copy: src={{dbname}}-backup.sql.gz dest=/tmp
+- name: unpack database dump
+  shell: gunzip -f /tmp/{{dbname}}-backup.sql.gz
+  args:
+    executable: /bin/bash
+  sudo: yes
+- name: restore database
+  shell: psql -d {{dbname}} -a -f /tmp/{{dbname}}-backup.sql
+  args:
+    executable: /bin/bash
+  become: true
+  become_user: postgres

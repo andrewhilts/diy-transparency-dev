@@ -1,0 +1,24 @@
+server {
+  listen 80;
+  server_name {{apiHostname}};
+
+  #ssl_certificate  /etc/ssl/certs/{{apiHostname}}.crt ;
+  #ssl_certificate_key  /etc/ssl/private/{{apiHostname}}.key ;
+
+  #include /etc/nginx/includes/ssl.conf;
+  include /etc/nginx/includes/dns.conf;
+  include /etc/nginx/includes/gzip.conf;
+
+  index index.php index.html;
+  root {{webRoot}}{{apiLocalPath}};
+
+  location / {
+    proxy_pass http://127.0.0.1:5000/;
+  }
+
+  more_set_headers "Access-Control-Allow-Headers: accept, content-type";
+  more_set_headers "Access-Control-Allow-Origin: {{default_protocol}}://{{frontEndHostname}}";
+  more_set_headers "Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE";
+  more_set_headers "Access-Control-Allow-Credentials: true";
+
+}

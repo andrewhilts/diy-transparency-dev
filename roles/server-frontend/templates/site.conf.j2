@@ -1,0 +1,28 @@
+server {
+  #listen 443;
+  listen 80;
+  server_name {{frontEndHostname}};
+
+  #ssl_certificate  /etc/ssl/certs/{{frontEndHostname}}.crt ;
+  #ssl_certificate_key  /etc/ssl/private/{{frontEndHostname}}.key ;
+
+  #include /etc/nginx/includes/ssl.conf;
+  include /etc/nginx/includes/dns.conf;
+  include /etc/nginx/includes/gzip.conf;
+
+  index index.php index.html;
+
+  location / {
+    root {{webRoot}}{{transLocalPath}}/prod;
+    #proxy_pass http://0.0.0.0:9000;
+  }
+}
+
+#server {
+#  listen      80;
+#  server_name {{frontEndHostname}};
+
+#  location / {
+#    return 301 https://{{frontEndHostname}}$request_uri;
+#  }
+#}

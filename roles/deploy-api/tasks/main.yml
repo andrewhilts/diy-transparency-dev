@@ -1,0 +1,7 @@
+# Main db backup/restore role
+- include: install.yml 
+  when: mode == "install"
+- include: backup.yml 
+  when: mode == "backup"
+- include: restore.yml
+  when: mode == "restore"

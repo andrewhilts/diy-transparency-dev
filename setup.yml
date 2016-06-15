@@ -1,0 +1,40 @@
+---
+- name: Basic Trans server setup
+  hosts: all
+  gather_facts: no
+  sudo: yes
+
+  roles:
+    - common
+    - postgres
+    - server-common
+    - role: server-api
+      domain: '{{apiHostname}}'
+    - role: ansible-nvm
+      sudo: no
+      nvm:
+        version: v0.31.0
+        node_version: 4.3.1
+    - role: server-frontend
+
+- name: Deploy app code
+  hosts: all
+
+  roles:
+    - dependencies-api
+    - dependencies-frontend
+    - role: deploy-api
+      mode: install
+    - deploy-frontend
+
+  handlers:
+    - name: restart nginx
+      service: name=nginx state=restarted
+
+- name: Restore db
+  hosts: all
+  sudo: yes
+
+  roles:
+    - role: deploy-api
+      mode: restore

@@ -1,0 +1,18 @@
+- name: use stable NVM
+  shell: source ~/.profile && nvm use stable
+  args:
+     executable: /bin/bash
+
+- name: build Frontend
+  shell: source ~/.profile && bower install && grunt build
+  when: not frontEndGruntServe
+  args:
+    executable: /bin/bash
+    chdir: "{{webRoot}}{{transLocalPath}}"
+
+- name: replace Frontend in prod
+  shell: source ~/.profile && bower install && rm -rf ./prod && mv ./dist ./prod
+  when: not frontEndGruntServe
+  args:
+    executable: /bin/bash
+    chdir: "{{webRoot}}{{transLocalPath}}"

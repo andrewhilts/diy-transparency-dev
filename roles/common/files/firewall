@@ -1,0 +1,40 @@
+#! /bin/sh
+# /etc/init.d/firewall
+
+### BEGIN INIT INFO
+# Provides: firewall
+# Required-Start: $remote_fs $syslog
+# Required-Stop: $remote_fs $syslog
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: Simple firewall
+# Description: A simple firewall
+### END INIT INFO
+
+# If you want a command to always run, put it here
+
+# Carry out specific functions when asked to by the system
+
+case "$1" in
+start)
+	echo "Starting firewall"
+	# run application you want to start
+	/usr/local/bin/iptables.sh
+;;
+stop)
+	echo "Stopping firewall
+	"
+	# kill application you want to stop
+	iptables -F
+;;
+restart)
+	/etc/init.d/firewall stop
+	/etc/init.d/firewall start
+;;
+*)
+	echo "Usage: /etc/init.d/firewall {start|stop|restart}"
+	exit 1
+;;
+esac
+
+exit 0
