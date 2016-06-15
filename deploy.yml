@@ -1,0 +1,10 @@
+---
+- name: Deploy Transparency App code
+  hosts: all
+
+  roles:
+    - dependencies-api
+    - dependencies-frontend
+    - role: deploy-api
+      mode: install
+    - deploy-frontend

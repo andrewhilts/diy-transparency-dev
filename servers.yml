@@ -1,0 +1,10 @@
+---
+- name: Configure Transparency App servers
+  hosts: all
+  sudo: yes
+
+  roles:
+    - role: server-api
+      domain: '{{apiHostname}}'
+      node_version: 4.3.1
+    - role: server-frontend

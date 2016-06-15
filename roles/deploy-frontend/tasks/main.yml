@@ -16,3 +16,7 @@
   args:
     executable: /bin/bash
     chdir: "{{webRoot}}{{transLocalPath}}"
+
+- name: restart nginx
+  service: name=nginx state=restarted
+  sudo: yes

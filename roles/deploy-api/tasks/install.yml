@@ -2,21 +2,25 @@
 - name: install dependencies
   pip: requirements=requirements.txt virtualenv={{webRoot}}{{apiLocalPath}}/venv chdir={{webRoot}}{{apiLocalPath}}
 
+- name: install setfacl support
+  become: yes
+  apt: pkg=acl
+
 ## Database setup
 - name: ensure database is created
   postgresql_db: name={{dbname}} state=present login_user=postgres
-  sudo: yes
-  sudo_user: postgres
+  become: true
+  become_user: postgres
 
 - name: ensure user has access to database
   postgresql_user: db={{dbname}} name={{dbuser}} password={{dbpassword}} priv=ALL
-  sudo: yes
-  sudo_user: postgres
+  become: true
+  become_user: postgres
 
 - name: ensure user does not have unnecessary privilege
   postgresql_user: name={{dbuser}} role_attr_flags=NOSUPERUSER,NOCREATEDB
-  sudo: yes
-  sudo_user: postgres
+  become: true
+  become_user: postgres
 
 ## Service to start and stop app and monitor its uptime
 - name: Copying transparency launch script
