@@ -1,7 +1,7 @@
 ---
 unix_user: vagrant
-frontEndHostname: trans.local
-apiHostname: api.trans.local
+frontEndHostname: diy-transparency.local
+apiHostname: api.diy-transparency.local
 
 default_protocol: http
 mysql_root_pass: nothingtoseehere

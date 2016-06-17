@@ -12,8 +12,8 @@ Vagrant.configure(2) do |config|
 	
 	# Ensure this matches your domain in group_vars/all
 	# config.vm.hostname = "api.ami.local"
-	config.vm.hostname = "trans.local"
-	config.hostsupdater.aliases = ["api.trans.local"]
+	config.vm.hostname = "diy-transparency.local"
+	config.hostsupdater.aliases = ["api.diy-transparency.local"]
 	config.vm.network :forwarded_port, guest: 22, host: 1234, auto_correct: true
 
 	# vbox specific config
@@ -29,7 +29,7 @@ Vagrant.configure(2) do |config|
 	# INSTALL STUFF HERE
 	config.vm.provision "ansible" do |ansible|
 		ansible.verbose = "v"
-		ansible.playbook = "setup.yml"
+		ansible.playbook = "backup.yml"
 	end
 
 end
