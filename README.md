@@ -40,7 +40,7 @@ Once the above requirements are met, follow the below steps in order.
 
     1. The installation files can be found here: [https://github.com/andrewhilts/diy-transparency](https://github.com/andrewhilts/diy-transparency)
 
-    2. The simplest way to obtain these files is using git: **git clone ****[https://github.com/andrewhilts/diy-transparenc**y](https://github.com/andrewhilts/diy-transparency). You can also simply download a zip file from the project page.
+    2. The simplest way to obtain these files is using git: **git clone **[https://github.com/andrewhilts/diy-transparency](https://github.com/andrewhilts/diy-transparency). You can also simply download a zip file from the project page.
 
 2. In the terminal, **cd **into the downloaded project’s directory. You can have a look at the VagrantFile and change the virtual machine name or IP address if you wish.
 
