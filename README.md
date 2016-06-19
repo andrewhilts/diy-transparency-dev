@@ -44,6 +44,8 @@ Once the above requirements are met, follow the below steps in order.
 
 2. In the terminal, **cd **into the downloaded project’s directory. You can have a look at the VagrantFile and change the virtual machine name or IP address if you wish.
 
+2. Then, make two directories, "code-api" and "code-frontend".
+
 3. In the "group_vars" folder, edit “all” on lines 7 and 11 to change the passwords for your database to your own passwords.
 
 4. Then, run **vagrant up**.
