@@ -29,7 +29,7 @@ Vagrant.configure(2) do |config|
 	# INSTALL STUFF HERE
 	config.vm.provision "ansible" do |ansible|
 		ansible.verbose = "v"
-		ansible.playbook = "backup.yml"
+		ansible.playbook = "setup.yml"
 	end
 
 end
