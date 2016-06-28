@@ -4,5 +4,5 @@
   sudo: yes
 
   roles:
-    - role: ami-community-db
+    - role: deploy-api
       mode: restore
